@@ -1,0 +1,32 @@
+{
+  "name": "ad",
+  "version": "1.0.0",
+  "description": "advertisement enrichment api",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "load-test": "node ./app/load-test.js",
+    "dev": "nodemon ./app/index.js",
+    "prod": "NODE_ENV=production node ./app/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@maxmind/geoip2-node": "^0.6.0",
+    "axios": "^0.19.0",
+    "bunyan": "^1.8.12",
+    "http": "0.0.0",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "autocannon": "^4.0.0",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "server-destroy": "^1.0.1",
+    "supertest": "^4.0.2"
+  }
+}
