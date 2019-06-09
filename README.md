@@ -12,6 +12,7 @@
 3. Automated tests to demostrate corrects.
 4. How fast you made end-to-end execution ?
    * about 300ms. See below Run the App in PROD mode for result.
+   * For best performance and meet the requirements, first load publisher asynchronosly, then load demographics and country in parallel asynchronosly. Finally merge the 3 data sources.
    * using time curl command to get a end-to-end performance. See below section.
 
 5. Ensure can hanlde average 50 requests/second over a period of time.
