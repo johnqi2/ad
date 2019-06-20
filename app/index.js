@@ -7,14 +7,27 @@ const log = require('./log');
 
 const PORT = 3000;
 const app = new Koa();
+
+app.use(async(ctx, next) => {
+  try {
+    await next()
+    const status = ctx.status || 404
+    if (status === 404) {
+      ctx.status = 404;
+      ctx.body = { error: 'Not found.', status: ctx.status };
+    }
+  } catch (err) {
+    log.error(err.message);
+    ctx.status = err.status || 500
+    ctx.body = {
+      error: ctx.status == 500 ? 'Internal server error' : err.messge,
+      status: ctx.status
+    };
+  }
+})
+
 app.use(router.routes());
 app.use(logger());
-
-app.on('error', (err, ctx) => {
-  log.error(err.message);
-  ctx.status = 500;
-  ctx.body = { error: err.message, status: ctx.status };
-});
 
 server = http.createServer(app.callback()).listen(PORT);
 destroyable(server);
