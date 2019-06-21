@@ -10,8 +10,8 @@ const app = new Koa();
 
 app.use(async(ctx, next) => {
   try {
-    await next()
-    const status = ctx.status || 404
+    await next();
+    const status = ctx.status || 404;
     if (status === 404) {
       ctx.status = 404;
       ctx.body = { error: 'Not found.', status: ctx.status };
