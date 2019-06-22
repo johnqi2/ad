@@ -8,6 +8,7 @@ const log = require('./log');
 const PORT = 3000;
 const app = new Koa();
 
+// take care of 404, 500 and other uncaught exceptions
 app.use(async(ctx, next) => {
   try {
     await next();

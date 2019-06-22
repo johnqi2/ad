@@ -5,6 +5,8 @@ const log = require('./log');
 const config = require('./config');
 
 const client = new WebServiceClient('141633', 'ZBA9j3SZtdmW');
+// cache for external service to speed up performance
+const countryCache = {};
 
 const getPubliser = siteId => {
   const PUBLISHER_URL = 'http://159.89.185.155:3000/api/publishers/find';
@@ -48,13 +50,20 @@ const getCountry = ip => {
   });
 }
 
+
 const enrichAd = async (siteId, ip) => {
   const body = {};
 
   if (config.country) {
-    const country = await getCountry(ip);
-    if (country != 'US') {
-      throw ERRORS.error(ERRORS[1001]);
+    // retrieve from cache first
+    let country = countryCache[ip];
+    if (!country) {
+      country = await getCountry(ip);
+      if (country != 'US') {
+        throw ERRORS.error(ERRORS[1001]);
+      }
+      // store into cache
+      countryCache[ip] = country;
     }
     body.geo = { country };
   }
